@@ -1,0 +1,7 @@
+# Fichiers à ignorer
+*.o
+*.out
+*.exe
+build/
+bin/
+.vscode/
