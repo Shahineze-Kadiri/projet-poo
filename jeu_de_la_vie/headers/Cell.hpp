@@ -9,9 +9,8 @@ public:
     Cell(int x, int y);
     virtual ~Cell();
 
-    virtual bool isAlive() const = 0;    // Méthode polymorphe obligatoire
-    void setState(bool state);
-    void applyState();                   // Applique nextState pour la prochaine génération
+    virtual bool isAlive() const = 0;   
+
 
     int getX() const;
     int getY() const;
