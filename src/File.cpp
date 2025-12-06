@@ -7,46 +7,57 @@ File::File() {
 }
 
 File::File(ifstream file) {
-    this->file = file;
-}
-
-void File::Read(const string filename) {
-    this->file(filename);
-    if(!(this->file)) {
-        cout << "Error : File cannot be read" << endl;
-    }
+    this->file = move(file);
 }
 
 int File::ReadHeight() {
-    this->file.Read();
-    int height;
-    this->file >> height;
-    return height;
+    if(this->file.is_open()) {
+        int height;
+        this->file >> height;
+        return height;
+    }
+    PrintError();
+    return 0;
 }
 
 int File::ReadLenght() {
-    this->file.Read();
-    int lenght;
-    this->file >> lenght;
-    return lenght;
+    if(this->file.is_open()) {
+        int lenght;
+        this->file >> lenght;
+        return lenght;
+    }
+    PrintError();
+    return 0;
 }
 
-vector<Cell> File::ReadMatrix(int height, int lenght) {
-    this->file.Read();
-    vector<Cell> matrix;
-    bool cell;
-    int y = 0;
-    while(getline(this->file, matrix)) {
-        int i = 0;
-        int x = 0;
-        while(i < 2*lenght) {
-            if(i%2 == 0) {
-                matrix[x][y] = this->file.get(cell);
-                x++;
+vector<vector<Cell*>> File::ReadMatrix(int height, int lenght) {
+    vector<vector<Cell*>> matrix;
+    matrix.resize(height, vector<Cell*>(lenght, nullptr));
+    if(this->file.is_open()) {
+        string line;
+        getline(this->file, line);
+        int y = 0;
+        while(getline(this->file, line) && y < height) {
+            int x = 0;
+            for(size_t i = 0; i < line.size() && x < lenght; i++) {
+                if(line[i] == '1') {
+                    matrix[y][x] = new AliveCell(x, y);
+                    x++;
+                }
+                else if(line[i] == '0') {
+                    matrix[y][x] = new DeadCell(x, y);
+                    x++;
+                }
             }
-            i++;
+            y++;
         }
-        y++;
+        this->file.close();
+        return matrix;
     }
+    PrintError();
     return matrix;
+}
+
+void File::PrintError() {
+    cout << "Error : File cannot be read !" << endl;
 }

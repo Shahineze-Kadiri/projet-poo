@@ -1,10 +1,13 @@
 #pragma once
 
 #include "../headers/Grid.hpp"
+#include "../headers/AliveCell.hpp"
+#include "../headers/DeadCell.hpp"
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <utility>
 
 using namespace std;
 
@@ -14,9 +17,8 @@ class File {
     public:
         File();
         File(ifstream file);
-        ~File();
-        void Read(const string filename);
         int ReadHeight();
         int ReadLenght();
-        vector<Cell> ReadMatrix(int height, int lenght);
+        vector<vector<Cell*>> ReadMatrix(int height, int lenght);
+        void PrintError();
 };
