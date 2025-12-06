@@ -1,11 +1,11 @@
 #include "../headers/Display.hpp"
 
-Display:: Display(const int cellSize, const int gridWidth,const int gridHeight){
-    cellSize(cellSize)
-    gridWidth (gridWidth);
-    gridHeight (gridHeight);
-    window(sf::VideoMode(gridWidth* cellSize, gridHeight* cellSize), "Game of Life");
-};
+Display:: Display(int cellSize, int gridWidth, int gridHeight) :
+    cellSize(cellSize),
+    gridWidth (gridWidth),
+    gridHeight (gridHeight),
+    window(sf::VideoMode(gridWidth* cellSize, gridHeight* cellSize), "Game of Life")
+{};
 
 
 sf::RenderWindow& Display:: getWindow(){
