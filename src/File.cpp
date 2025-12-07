@@ -20,26 +20,26 @@ int File::ReadHeight() {
     return 0;
 }
 
-int File::ReadLenght() {
+int File::ReadWidth() {
     if(this->file.is_open()) {
-        int lenght;
-        this->file >> lenght;
-        return lenght;
+        int width;
+        this->file >> width;
+        return width;
     }
     PrintError();
     return 0;
 }
 
-vector<vector<Cell*>> File::ReadMatrix(int height, int lenght) {
+vector<vector<Cell*>> File::ReadMatrix(int height, int width) {
     vector<vector<Cell*>> matrix;
-    matrix.resize(height, vector<Cell*>(lenght, nullptr));
+    matrix.resize(height, vector<Cell*>(width, nullptr));
     if(this->file.is_open()) {
         string line;
         getline(this->file, line);
         int y = 0;
         while(getline(this->file, line) && y < height) {
             int x = 0;
-            for(size_t i = 0; i < line.size() && x < lenght; i++) {
+            for(size_t i = 0; i < line.size() && x < width; i++) {
                 if(line[i] == '1') {
                     matrix[y][x] = new AliveCell(x, y);
                     x++;
@@ -51,11 +51,14 @@ vector<vector<Cell*>> File::ReadMatrix(int height, int lenght) {
             }
             y++;
         }
-        this->file.close();
         return matrix;
     }
     PrintError();
     return matrix;
+}
+
+void File::FileClose() {
+    this->file.close();
 }
 
 void File::PrintError() {

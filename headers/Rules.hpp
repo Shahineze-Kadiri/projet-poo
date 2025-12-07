@@ -1,12 +1,14 @@
 #pragma once
 
-#include "../headers/Grid.hpp"
+#include "../headers/Cell.hpp"
+
+class Grid;
+
+using namespace std;
 
 class Rules {
-    private:
-        Grid* matrix;
     public:
-        Rules(Grid* matrix);
-        static bool AliveRules(Cell* c);
-        static bool DeadRules(Cell* c);
+        Rules();
+        static bool AliveRules(Grid* matrix, Cell* c);
+        static bool DeadRules(Grid* matrix, Cell* c);
 };

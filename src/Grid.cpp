@@ -2,22 +2,18 @@
 
 using namespace std;
 
-Grid::Grid() {
-    this->height = 4;
-    this->lenght = 6;
-    this->matrix = {};
-}
+Grid::Grid() {}
 
-Grid::Grid(int h, int l, vector<vector<Cell*>> M) {
+Grid::Grid(int h, int w, vector<vector<Cell*>> M) {
     this->height = h;
-    this->lenght = l;
+    this->width = w;
     this->matrix = M;
-    this->matrix.resize(height, vector<Cell*>(lenght, nullptr));
+    this->matrix.resize(height, vector<Cell*>(width, nullptr));
 }
 
 Grid::~Grid() {
     for(int i = 0; i < height; i++) {
-        for(int j = 0; j < lenght; j++) {
+        for(int j = 0; j < width; j++) {
             delete matrix[i][j];
         }
     }
@@ -25,9 +21,9 @@ Grid::~Grid() {
 int Grid::CountNeighbors(Cell* c) {
     int x = c->GetX();
     int y = c->GetY();
-    int neighbors;
+    int neighbors = 0;
     for(int i = max(0, y-1); i <= min(y+1, height-1); i++) {
-        for(int j = max(0, x-1); j <= min(x+1, lenght-1); j++) {
+        for(int j = max(0, x-1); j <= min(x+1, width-1); j++) {
             if(matrix[i][j]->GetState() && matrix[i][j] != matrix[y][x]) { 
                 neighbors++;
             }
@@ -38,37 +34,34 @@ int Grid::CountNeighbors(Cell* c) {
 
 void Grid::Print() {
     for(int i = 0; i < height; i++) {
-        for(int j = 0; j < lenght; j++) {
+        for(int j = 0; j < width; j++) {
             cout << matrix[i][j]->GetState() << endl;
         }
     }
 }
 
-Grid Grid::ApplyGrid() {
-    vector<vector<Cell*>> matrixApply;
-    matrixApply.resize(height, vector<Cell*>(lenght, nullptr));
+vector<vector<Cell*>> Grid::ApplyGrid() {
     int y = 0;
     for(int i = 0; i < height; i++) {
         int x = 0;
-        for(int j = 0; j < lenght; j++) {
+        for(int j = 0; j < width; j++) {
             if(matrix[i][j]->GetState()) {
-                if(AliveRules(matrix[i][j])) {
-                    matrixApply[i][j] = new AliveCell(j, i);
+                if(Rules::AliveRules(this, matrix[i][j])) {
+                    matrix[i][j]->SetState(true);
                 }
                 else {
-                    matrixApply[i][j] = new DeadCell(j, i);
+                    matrix[i][j]->SetState(false);
                 }
             }
             else {
-                if(DeadRules(matrix[i][j])) {
-                    matrixApply[i][j] = new AliveCell(j, i);
+                if(Rules::DeadRules(this, matrix[i][j])) {
+                    matrix[i][j]->SetState(true);
                 }
                 else {
-                    matrixApply[i][j] = new DeadCell(j, i);
+                    matrix[i][j]->SetState(false);
                 }
             }
         }
     }
-    Grid gridApply = new Grid(this->height, this-> lenght, matrixApply)
-    return gridApply;
+    return matrix;
 }

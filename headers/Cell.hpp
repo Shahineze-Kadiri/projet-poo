@@ -7,10 +7,9 @@ class Cell {
         bool state;
     public:
         Cell(int x, int y);
-        Cell(int x, int y, bool state);
-        void SetState(bool state);
         int GetX() const;
         int GetY() const;
+        void SetState(bool state);
         virtual ~Cell() {}
         virtual bool GetState() = 0;
 };

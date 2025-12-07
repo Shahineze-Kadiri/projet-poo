@@ -18,7 +18,8 @@ class File {
         File();
         File(ifstream file);
         int ReadHeight();
-        int ReadLenght();
-        vector<vector<Cell*>> ReadMatrix(int height, int lenght);
+        int ReadWidth();
+        vector<vector<Cell*>> ReadMatrix(int height, int width);
+        void FileClose();
         void PrintError();
 };

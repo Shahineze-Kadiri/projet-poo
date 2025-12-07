@@ -1,17 +1,16 @@
 #include "../headers/Rules.hpp"
+#include "../headers/Grid.hpp" 
 
-Rules::Rules(Grid* matrix) {
-    this->matrix = matrix;
-}
+Rules::Rules() {}
 
-bool Rules::AliveRules(Cell* c) {
-    if(1 < matrix->CountNeighbors(c) < 4) {
-        return ;
+bool Rules::AliveRules(Grid* matrix, Cell* c) {
+    if(matrix->CountNeighbors(c) > 1 && matrix->CountNeighbors(c) < 4) {
+        return true;
     }
     return false;
 }
 
-bool Rules::DeadRules(Cell* c) {
+bool Rules::DeadRules(Grid* matrix, Cell* c) {
     if(matrix->CountNeighbors(c) == 3) {
         return true;
     }
