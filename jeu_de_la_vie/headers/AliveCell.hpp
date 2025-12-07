@@ -1,6 +1,9 @@
-class AliveCell : public Cell {
-public:
-    AliveCell(int x, int y);
+#pragma once
 
-    bool isAlive() const override;   // Renvoie true
+#include "../headers/Cell.hpp"
+
+class AliveCell : public Cell {
+    public:
+        AliveCell(int x, int y);
+        bool GetState() override;   // Renvoie true
 };

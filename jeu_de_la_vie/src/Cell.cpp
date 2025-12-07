@@ -1,11 +1,11 @@
-#include "Cell.hpp"
+#include "../headers/Cell.hpp"
 
-Cell::Cell(int x, int y)
-    : x(x), y(y), State(false) {}
+Cell::Cell(int x, int y) : x(x), y(y) {};
 
-void Cell::setState(bool state) {
-    State = state;
+int Cell::GetX() const {
+    return this->x; 
 }
 
-int Cell::getX() { return x; }
-int Cell::getY() { return y; }
+int Cell::GetY() const { 
+    return this->y; 
+}

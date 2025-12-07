@@ -1,7 +1,7 @@
-#include "DeadCell.hpp"
+#include "../headers/DeadCell.hpp"
 
-DeadCell::DeadCell(int x, int y): DeadCell(x, y) {}
+DeadCell::DeadCell(int x, int y): Cell(x, y) {}
 
-bool DeadCell::isAlive() {
+bool DeadCell::GetState() {
     return false;
 }
