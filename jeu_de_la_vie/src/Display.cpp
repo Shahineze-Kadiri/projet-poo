@@ -7,6 +7,9 @@ Display:: Display(int cellSize, int gridWidth, int gridHeight) :
     window(sf::VideoMode(gridWidth* cellSize, gridHeight* cellSize), "Game of Life")
 {};
 
+Display::~Display() {};
+
+
 
 sf::RenderWindow& Display:: getWindow(){
     return window;
