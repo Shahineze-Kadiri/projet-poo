@@ -1,7 +1,11 @@
 #pragma once
 
 #include "../headers/Cell.hpp"
+#include "../headers/AliveCell.hpp"
+#include "../headers/DeadCell.hpp"
+#include "../headers/Rules.hpp"
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -9,10 +13,12 @@ class Grid {
     private:
         int height;
         int lenght;
-        vector<Cell> matrix;
+        vector<vector<Cell*>> matrix;
     public:
         Grid();
-        Grid(int height, int lenght, vector<Cell> matrix);
+        Grid(int height, int lenght, vector<vector<Cell*>> matrix);
         ~Grid();
-        vector<Cell> GetNeighbors(Cell c);
+        int CountNeighbors(Cell* c);
+        void Print();
+        Grid ApplyGrid();
 };
