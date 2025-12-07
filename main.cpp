@@ -53,3 +53,25 @@ int main() {
 
     return 0;
 }
+
+Display display(cellSize, width, height);
+    sf::RenderWindow& window = display.GetWindow();
+    while(window.isOpen()) {
+        sf::Event event;
+        while(window.pollEvent(event)) {
+            if(event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+        window.clear();
+        display.RenderGrid(m);
+        window.display();
+        sleep(1);
+        display.RenderGrid(m1);
+    }
+
+    int height = 5; 
+    int width = 5;    
+    int cellSize = 10;
+    generateRandomMatrix(height, width, "random_matrix.txt");
+

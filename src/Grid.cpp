@@ -43,9 +43,7 @@ void Grid::Print() {
 vector<vector<Cell*>> Grid::ApplyGrid() {
     vector<vector<Cell*>> matrixApply;
     matrixApply.resize(height, vector<Cell*>(width, nullptr));
-    int y = 0;
     for(int i = 0; i < height; i++) {
-        int x = 0;
         for(int j = 0; j < width; j++) {
             if(matrix[i][j]->GetState()) {
                 if(Rules::AliveRules(this, matrix[i][j])) {

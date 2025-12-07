@@ -19,7 +19,7 @@ void Display::RenderGrid(const vector<vector<Cell*>>& matrix){
     sf::RectangleShape cell(sf::Vector2f(cellSize - 1.0f, cellSize - 1.0f));
     for(int x = 0; x < gridHeight; ++x) {
         for (int y = 0; y < gridWidth; ++y) {
-            if(matrix[x][y]->GetState()) {
+            if(matrix[y][x]->GetState()) {
                 cell.setPosition(x * cellSize, y * cellSize);
                 window.draw(cell);
             }
