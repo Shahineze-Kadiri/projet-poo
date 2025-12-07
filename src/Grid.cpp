@@ -41,27 +41,29 @@ void Grid::Print() {
 }
 
 vector<vector<Cell*>> Grid::ApplyGrid() {
+    vector<vector<Cell*>> matrixApply;
+    matrixApply.resize(height, vector<Cell*>(width, nullptr));
     int y = 0;
     for(int i = 0; i < height; i++) {
         int x = 0;
         for(int j = 0; j < width; j++) {
             if(matrix[i][j]->GetState()) {
                 if(Rules::AliveRules(this, matrix[i][j])) {
-                    matrix[i][j]->SetState(true);
+                    matrixApply[i][j] = new AliveCell(j, i);
                 }
                 else {
-                    matrix[i][j]->SetState(false);
+                    matrixApply[i][j] = new DeadCell(j, i);
                 }
             }
             else {
                 if(Rules::DeadRules(this, matrix[i][j])) {
-                    matrix[i][j]->SetState(true);
+                    matrixApply[i][j] = new AliveCell(j, i);
                 }
                 else {
-                    matrix[i][j]->SetState(false);
+                    matrixApply[i][j] = new DeadCell(j, i);
                 }
             }
         }
     }
-    return matrix;
+    return matrixApply;
 }

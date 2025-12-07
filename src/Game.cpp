@@ -7,8 +7,10 @@
 #include <utility>
 #include <cstdlib>
 #include <ctime>
+#include <unistd.h>
 
 using namespace std;
+using namespace sf;
 
 void generateRandomMatrix(int height, int width, const string& filename){
     ofstream out(filename);
@@ -40,8 +42,9 @@ int main() {
     int h = f.ReadHeight();
     int w = f.ReadWidth();
     vector<vector<Cell*>> m = f.ReadMatrix(h,w);
-    Grid g(h,w,m);
+    Grid g(h, w, m);
     vector<vector<Cell*>> m1 = g.ApplyGrid();
+    
     Display display(cellSize, width, height);
     sf::RenderWindow& window = display.GetWindow();
     while(window.isOpen()) {
@@ -51,7 +54,10 @@ int main() {
                 window.close();
             }
         }
+        window.clear();
         display.RenderGrid(m);
+        window.display();
+        sleep(1);
         display.RenderGrid(m1);
     }
     f.FileClose();
