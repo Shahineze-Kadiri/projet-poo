@@ -12,11 +12,11 @@ using namespace std;
 class Grid {
     private:
         int height;
-        int lenght;
+        int width;
         vector<vector<Cell*>> matrix;
     public:
         Grid();
-        Grid(int height, int lenght, vector<vector<Cell*>> matrix);
+        Grid(int height, int width, vector<vector<Cell*>> matrix);
         ~Grid();
         int CountNeighbors(Cell* c);
         void Print();
