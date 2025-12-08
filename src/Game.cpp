@@ -2,29 +2,32 @@
 #include "../headers/File.hpp"
 #include "../headers/Display.hpp"
 
-#include <iostream>
-#include <fstream>
-#include <utility>
-#include <cstdlib>
-#include <ctime>
-#include <unistd.h>
-#include <cassert>
+#include <iostream> // Pour les entrées/sorties
+#include <vector> // Pour utiliser vector
+#include <fstream> // Pour la gestion des fichiers
+#include <string> // Pour utiliser string
+#include <utility> // Pour std::move
+#include <cstdlib> // Pour l'aléatoire
+#include <ctime> // Pour l'initialisation aléatoire
+#include <unistd.h> // Pour sleep
+#include <cassert> // Pour les assertions
 
-using namespace std;
-using namespace sf;
+using namespace std; // Pour éviter d'écrire std:: partout
+using namespace sf; // Pour éviter d'écrire sf:: partout
 
+// Génère une matrice aléatoire de taille(height, width) dans un fichier txt
 void generateRandomMatrix(int height, int width, const string& filename){
     ofstream out(filename);
 
-    if(!out.is_open()){
+    if(!out.is_open()) {
         cout << "Erreur : impossible d'ouvrir le fichier" << endl ;
         return;
     }
-    srand(time(nullptr)); //initialisation de l'aléatoire 
+    srand(time(nullptr)); // Initialisation de l'aléatoire 
     out << height <<  " " << width << endl;
     for(int i=0; i < height ; i++){
         for(int j=0; j < width; j++){
-            int value = rand()%2; //aléatoire qui vaut soit 0 soit 1
+            int value = rand()%2; // Aléatoire qui vaut soit 0 soit 1
             out << value << " ";
         }
         out << endl;
@@ -33,14 +36,16 @@ void generateRandomMatrix(int height, int width, const string& filename){
     cout << "Matrice généré aléatoirement dans " << filename << endl;
 }
 
+// Test 1 (sans affichage) avec une matrice 5x5, dans un fichier txt
 void Test1() {
     ifstream filename("matrix.txt");
-    File f(move(filename));
-    int h = f.ReadHeight();
-    int w = f.ReadWidth();
-    vector<vector<Cell*>> m = f.ReadMatrix(h,w);
-    Grid g(h, w, m);
-    g.UpdateGrid();
+    File f(move(filename)); // Déplacer le flux du fichier texte dans un objet File
+    int h = f.ReadHeight(); 
+    int w = f.ReadWidth(); 
+    vector<vector<Cell*>> m = f.ReadMatrix(h,w); 
+    Grid g(h, w, m); 
+    g.UpdateGrid(); 
+
     assert((g.GetMatrix()[0][0]->GetState() == false) &&
     "m1[0][0] == false");
     assert((g.GetMatrix()[0][1]->GetState() == false) &&
@@ -97,70 +102,72 @@ void Test1() {
     f.FileClose();
 }
 
-void TestDisplay() {
-    int height = 5; 
-    int width = 5;    
+// Test 1 (avec affichage) avec une matrice 5x5, dans un fichier txt
+void TestDisplay() { 
     int cellSize = 10;
 
     ifstream filename("matrix.txt");
-    File f(move(filename));
+    File f(move(filename)); // Déplacer le flux du fichier texte dans un objet File
     int h = f.ReadHeight();
     int w = f.ReadWidth();
     vector<vector<Cell*>> m = f.ReadMatrix(h,w);
     Grid g(h, w, m);
 
-    Display display(cellSize, width, height);
-    sf::RenderWindow& window = display.GetWindow();
+    Display display(cellSize, w, h);
+    RenderWindow& window = display.GetWindow();
     while(window.isOpen()) {
-        sf::Event event;
+        Event event;
         while(window.pollEvent(event)) {
-            if(event.type == sf::Event::Closed) {
+            if(event.type == Event::Closed) {
                 window.close();
             }
         }
         display.RenderGrid(g);
-        for(int i=0; i < 10;i++) {
-            sleep(3);
-            g.UpdateGrid();
-            display.RenderGrid(g);
-        }
+        sleep(2);
+        g.UpdateGrid();
     }
     f.FileClose();
 }
 
-void TestDisplay2() {
-    int height = 1200; 
-    int width = 1200;    
-    int cellSize = 10;
+// Test 2 (avec affichage) avec une matrice génèrer aléatoirement dans un fichier txt
+void TestDisplay2() { 
+    int height = 5;
+    int width = 5;
+    int cellSize = 2;
+    cout << "Entrer la hauteur de votre matrice : " << endl;
+    cin >> height;
+    cout << "Entrer la largeur de votre matrice : " << endl;
+    cin >> width;
+    cout << "Entrer la taille des cellules : " << endl;
+    cin >> cellSize;  
 
     generateRandomMatrix(height, width, "random_matrix.txt");
 
     ifstream filename("random_matrix.txt");
-    File f(move(filename));
+    File f(move(filename)); // Déplacer le flux du fichier texte dans un objet File
     int h = f.ReadHeight();
     int w = f.ReadWidth();
     vector<vector<Cell*>> m = f.ReadMatrix(h,w);
     Grid g(h, w, m);
 
-    Display display(cellSize, width, height);
-    sf::RenderWindow& window = display.GetWindow();
+    Display display(cellSize, w, h);
+    RenderWindow& window = display.GetWindow();
     while(window.isOpen()) {
-        sf::Event event;
+        Event event;
         while(window.pollEvent(event)) {
-            if(event.type == sf::Event::Closed) {
+            if(event.type == Event::Closed) {
                 window.close();
             }
         }
         display.RenderGrid(g);
-        sleep(3);
+        sleep(2);
         g.UpdateGrid();
-        display.RenderGrid(g);
     }
     f.FileClose();
 }
 
 int main() {
     Test1();
-    TestDisplay();
+    TestDisplay2();
     return 0;
 }

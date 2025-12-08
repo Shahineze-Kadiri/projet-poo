@@ -1,14 +1,15 @@
-#pragma once
+#pragma once // Inclusion multiple protection
 
 #include "../headers/Cell.hpp"
 #include "../headers/AliveCell.hpp"
 #include "../headers/DeadCell.hpp"
 #include "../headers/Rules.hpp"
-#include <vector>
-#include <iostream>
+#include <vector> // Pour utiliser vector
+#include <iostream> // Pour les entrées/sorties
 
 using namespace std;
 
+// Classe modélisant la grille de cellules
 class Grid {
     private:
         int height;
@@ -22,6 +23,5 @@ class Grid {
         int GetHeight() const;
         int GetWidth() const;
         vector<vector<Cell*>> GetMatrix() const;
-        void Print();
         void UpdateGrid();
 };
