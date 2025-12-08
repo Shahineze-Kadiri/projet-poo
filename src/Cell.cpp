@@ -1,6 +1,7 @@
 #include "../headers/Cell.hpp"
 
-Cell::Cell(int x, int y) : x(x), y(y) {}
+Cell::Cell(int x, int y) : x(x), y(y) {
+}
 
 int Cell::GetX() const {
     return this->x; 

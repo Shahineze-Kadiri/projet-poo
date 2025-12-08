@@ -40,58 +40,56 @@ void Test1() {
     int w = f.ReadWidth();
     vector<vector<Cell*>> m = f.ReadMatrix(h,w);
     Grid g(h, w, m);
-
-    vector<vector<Cell*>> m1 = g.ApplyGrid();
-
-    assert((m1[0][0]->GetState() == false) &&
+    g.UpdateGrid();
+    assert((g.GetMatrix()[0][0]->GetState() == false) &&
     "m1[0][0] == false");
-    assert((m1[0][1]->GetState() == false) &&
+    assert((g.GetMatrix()[0][1]->GetState() == false) &&
     "m1[0][1] == false");
-    assert((m1[0][2]->GetState() == false) &&
+    assert((g.GetMatrix()[0][2]->GetState() == false) &&
     "m1[0][2] == false");
-    assert((m1[0][3]->GetState() == false) &&
+    assert((g.GetMatrix()[0][3]->GetState() == false) &&
     "m1[0][3] == false");
-    assert((m1[0][4]->GetState() == false) &&
+    assert((g.GetMatrix()[0][4]->GetState() == false) &&
     "m1[0][4] == false");
-    assert((m1[1][0]->GetState() == false) &&
+    assert((g.GetMatrix()[1][0]->GetState() == false) &&
     "m1[1][0] == false");
-    assert((m1[1][1]->GetState() == true) &&
+    assert((g.GetMatrix()[1][1]->GetState() == true) &&
     "m1[1][1] == true");
-    assert((m1[1][2]->GetState() == true) &&
+    assert((g.GetMatrix()[1][2]->GetState() == true) &&
     "m1[1][2] == true");
-    assert((m1[1][3]->GetState() == true) &&
+    assert((g.GetMatrix()[1][3]->GetState() == true) &&
     "m1[1][3] == true");
-    assert((m1[1][4]->GetState() == false) &&
+    assert((g.GetMatrix()[1][4]->GetState() == false) &&
     "m1[1][4] == false");
-    assert((m1[2][0]->GetState() == false) &&
+    assert((g.GetMatrix()[2][0]->GetState() == false) &&
     "m1[2][0] == false");
-    assert((m1[2][1]->GetState() == true) &&
+    assert((g.GetMatrix()[2][1]->GetState() == true) &&
     "m1[2][1] == true");
-    assert((m1[2][2]->GetState() == true) &&
+    assert((g.GetMatrix()[2][2]->GetState() == true) &&
     "m1[2][2] == true");
-    assert((m1[2][3]->GetState() == true) &&
+    assert((g.GetMatrix()[2][3]->GetState() == true) &&
     "m1[2][3] == true");
-    assert((m1[2][4]->GetState() == false) &&
+    assert((g.GetMatrix()[2][4]->GetState() == false) &&
     "m1[2][4] == false");
-     assert((m1[3][0]->GetState() == false) &&
+     assert((g.GetMatrix()[3][0]->GetState() == false) &&
     "m1[3][0] == false");
-    assert((m1[3][1]->GetState() == true) &&
+    assert((g.GetMatrix()[3][1]->GetState() == true) &&
     "m1[3][1] == true");
-    assert((m1[3][2]->GetState() == false) &&
+    assert((g.GetMatrix()[3][2]->GetState() == false) &&
     "m1[3][2] == false");
-    assert((m1[3][3]->GetState() == true) &&
+    assert((g.GetMatrix()[3][3]->GetState() == true) &&
     "m1[3][3] == true");
-    assert((m1[3][4]->GetState() == false) &&
+    assert((g.GetMatrix()[3][4]->GetState() == false) &&
     "m1[3][4] == false");
-     assert((m1[4][0]->GetState() == false) &&
+     assert((g.GetMatrix()[4][0]->GetState() == false) &&
     "m1[4][0] == false");
-    assert((m1[4][1]->GetState() == true) &&
+    assert((g.GetMatrix()[4][1]->GetState() == true) &&
     "m1[4][1] == true");
-    assert((m1[4][2]->GetState() == true) &&
+    assert((g.GetMatrix()[4][2]->GetState() == true) &&
     "m1[4][2] == true");
-    assert((m1[4][3]->GetState() == false) &&
+    assert((g.GetMatrix()[4][3]->GetState() == false) &&
     "m1[4][3] == false");
-    assert((m1[4][4]->GetState() == false) &&
+    assert((g.GetMatrix()[4][4]->GetState() == false) &&
     "m1[4][4] == false");
 
     cout << "Test completed successfully !" << endl;
@@ -120,12 +118,11 @@ void TestDisplay() {
                 window.close();
             }
         }
-        display.RenderGrid(m);
+        display.RenderGrid(g);
         for(int i=0; i < 10;i++) {
             sleep(3);
-            m = g.ApplyGrid();
-            Grid g(h, w, m);
-            display.RenderGrid(m);
+            g.UpdateGrid();
+            display.RenderGrid(g);
         }
     }
     f.FileClose();
@@ -154,16 +151,16 @@ void TestDisplay2() {
                 window.close();
             }
         }
-        display.RenderGrid(m);
+        display.RenderGrid(g);
         sleep(3);
-        m = g.ApplyGrid();
-        display.RenderGrid(m);
+        g.UpdateGrid();
+        display.RenderGrid(g);
     }
     f.FileClose();
 }
 
 int main() {
     Test1();
-    TestDisplay2();
+    TestDisplay();
     return 0;
 }

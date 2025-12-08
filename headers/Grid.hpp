@@ -19,6 +19,9 @@ class Grid {
         Grid(int height, int width, vector<vector<Cell*>> matrix);
         ~Grid();
         int CountNeighbors(Cell* c);
+        int GetHeight() const;
+        int GetWidth() const;
+        vector<vector<Cell*>> GetMatrix() const;
         void Print();
-        vector<vector<Cell*>> ApplyGrid();
+        void UpdateGrid();
 };

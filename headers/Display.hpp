@@ -18,5 +18,5 @@ class Display {
         Display(int cellSize, int gridWidth, int gridHeight);
         ~Display();
         RenderWindow& GetWindow(); //méthode pour renvoyer les valeurs afin de créer la fenêtre 
-        void RenderGrid(const vector<vector<Cell*>>& matrix); //reçoit la matrice de Grid et la modélise 
+        void RenderGrid(const Grid& grid); //reçoit la matrice de Grid et la modélise 
 };
