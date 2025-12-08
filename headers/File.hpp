@@ -1,6 +1,5 @@
 #pragma once // Inclusion multiple protection
 
-#include "../headers/Grid.hpp"
 #include "../headers/AliveCell.hpp"
 #include "../headers/DeadCell.hpp"
 #include <vector> // Pour utiliser vector

@@ -1,8 +1,6 @@
 #pragma once // Inclusion multiple protection
 
 #include "../headers/Cell.hpp"
-#include "../headers/AliveCell.hpp"
-#include "../headers/DeadCell.hpp"
 #include "../headers/Rules.hpp"
 #include <vector> // Pour utiliser vector
 #include <iostream> // Pour les entrées/sorties
