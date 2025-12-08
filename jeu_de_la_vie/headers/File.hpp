@@ -16,9 +16,10 @@ class File {
         ifstream file;
     public:
         File();
-        File(ifstream& file);
+        File(ifstream file);
         int ReadHeight();
         int ReadWidth();
         vector<vector<Cell*>> ReadMatrix(int height, int width);
+        void FileClose();
         void PrintError();
 };

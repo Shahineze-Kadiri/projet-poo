@@ -2,11 +2,7 @@
 
 using namespace std;
 
-Grid::Grid() {
-    this->height = 4;
-    this->width = 6;
-    this->matrix = {};
-}
+Grid::Grid() {}
 
 Grid::Grid(int h, int w, vector<vector<Cell*>> M) {
     this->height = h;
@@ -36,6 +32,18 @@ int Grid::CountNeighbors(Cell* c) {
     return neighbors;
 }
 
+int Grid::GetHeight() const {
+    return this->height;
+}
+
+int Grid::GetWidth() const {
+    return this->width;
+}
+
+vector<vector<Cell*>> Grid::GetMatrix() const {
+    return this->matrix;
+}
+
 void Grid::Print() {
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
@@ -44,31 +52,34 @@ void Grid::Print() {
     }
 }
 
-Grid Grid::ApplyGrid() {
-    vector<vector<Cell*>> matrixApply;
-    matrixApply.resize(height, vector<Cell*>(width, nullptr));
- 
+void Grid::UpdateGrid() {
+    vector<vector<bool>> StateMatrix;
+    StateMatrix.resize(height, vector<bool>(width));
+
     for(int i = 0; i < height; i++) {
-   
         for(int j = 0; j < width; j++) {
             if(matrix[i][j]->GetState()) {
                 if(Rules::AliveRules(this, matrix[i][j])) {
-                    matrixApply[i][j] = new AliveCell(j, i);
+                    StateMatrix[i][j] = true;
                 }
                 else {
-                    matrixApply[i][j] = new DeadCell(j, i);
+                    StateMatrix[i][j] = false;
                 }
             }
             else {
                 if(Rules::DeadRules(this, matrix[i][j])) {
-                    matrixApply[i][j] = new AliveCell(j, i);
+                    StateMatrix[i][j] = true;
                 }
                 else {
-                    matrixApply[i][j] = new DeadCell(j, i);
+                    StateMatrix[i][j] = false;
                 }
             }
         }
     }
-    Grid gridApply(this->height, this->width, matrixApply);
-    return gridApply;
+
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            matrix[i][j]->SetState(StateMatrix[i][j]);
+        }
+    }
 }

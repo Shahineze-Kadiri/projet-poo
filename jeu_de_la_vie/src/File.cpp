@@ -6,8 +6,7 @@ File::File() {
     cout << "Error : No file" << endl;
 }
 
-File::File(ifstream& file) { //correction apporté 
-    //passage par flux ne marche pas donc passage par référence préférable (pk à retenir)
+File::File(ifstream file) {
     this->file = move(file);
 }
 
@@ -52,11 +51,14 @@ vector<vector<Cell*>> File::ReadMatrix(int height, int width) {
             }
             y++;
         }
-        this->file.close();
         return matrix;
     }
     PrintError();
     return matrix;
+}
+
+void File::FileClose() {
+    this->file.close();
 }
 
 void File::PrintError() {
